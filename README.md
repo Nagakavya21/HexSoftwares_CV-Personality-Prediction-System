@@ -21,15 +21,15 @@ The system extracts key information such as skills, keywords, and achievements t
 ✅ FastAPI Backend for ML-powered predictions
 
 # 🛠️ Tech Stack
-Component	               Technology Used
+Component	                                                               Technology Used
 
-Frontend	               HTML, CSS, JavaScript
+Frontend	                                                               HTML, CSS, JavaScript
 
-Backend	                 FastAPI (Python)
+Backend	                                                                 FastAPI (Python)
 
-Machine Learning	       Scikit-learn / NLP Models
+Machine Learning	                                                       Scikit-learn / NLP Models
 
-Hosting                  Localhost / Deployable
+Hosting                                                                  Localhost / Deployable
 
 # 🔧 Installation & Setup
 
@@ -70,4 +70,4 @@ uvicorn main:app --reload
 🔹 Improves hiring decisions using AI insights
 
 # Demo Vedio
-check it out here:https://drive.google.com/file/d/1v6yy37G_uQRU8gzWHBHtyaNfeH5KS0zE/view?usp=drivesdk
+🔗check it out here:https://drive.google.com/file/d/1v6yy37G_uQRU8gzWHBHtyaNfeH5KS0zE/view?usp=drivesdk
