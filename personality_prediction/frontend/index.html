@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CV Personality Prediction</title>
+  <style>
+    :root {
+      --primary: #5b5bf7;
+      --secondary: #4facfe;
+      --muted: #6b6b86;
+      --bg: #f3f5ff;
+      --card: #ffffff;
+      --ok: #0ea5e9;
+      --good: #6366f1;
+      --border: #e7e7f2;
+      --success: #3cb371;
+      --warning: #ffb74d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, Segoe UI, Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, var(--bg), #fff 40%);
+      color: #0b0b2e;
+    }
+
+    .wrapper {
+      max-width: 1000px;
+      margin: 32px auto;
+      padding: 0 16px;
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      margin: 8px 0 4px;
+      font-size: 2.8rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .sub {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 18px;
+      font-size: 1.1rem;
+    }
+
+    .uploader, .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 18px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .uploader:hover, .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .uploader {
+      border: 2px dashed #cfd2ff;
+      background: #f9faff;
+      text-align: center;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(99, 102, 241, 0.25);
+      margin-top: 10px;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background: var(--secondary);
+      transform: scale(1.05);
+    }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .fileRow { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #1b1b46; }
+    .score { font-size: 64px; font-weight: 800; color: var(--good); margin: 6px 0; }
+    .meter { width: 100%; height: 12px; background: #eceefe; border-radius: 999px; overflow: hidden; }
+    .bar { height: 100%; width: 0%; background: var(--good); transition: width 0.6s ease; }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px; }
+    .list { padding-left: 18px; color: #2f2f61; }
+    .list li { margin: 8px 0; }
+
+    .footer { margin-top: 18px; text-align: center; color: var(--muted); font-size: 12px; }
+    .hidden { display: none; }
+
+    #personalityCard {
+      background: #e7f0ff;
+      border: 1px solid #b6d0ff;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #2b2b6f;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>Personality Prediction System </h1>
+    <p class="sub">Upload your CV to get personality prediction</p>
+
+    <div class="uploader">
+      <input type="file" id="cvFile" accept=".pdf,.doc,.docx" />
+      <button id="analyzeBtn" class="btn">Analyze CV</button>
+      <small style="color:var(--muted)">PDF, DOC, or DOCX files up to 5MB</small>
+    </div>
+
+    <div id="resultCard" class="card hidden">
+      <div class="fileRow" id="fileInfo"></div>
+      <div class="card" style="background:#f0f6ff">
+        <h3 style="margin:0;color:#2b2b6f">ATS Compatibility Score</h3>
+        <div class="score" id="scoreText">0%</div>
+        <div class="meter"><div class="bar" id="scoreBar"></div></div>
+      </div>
+
+      <div class="grid">
+        <div class="card" style="background:#fff5f5">
+          <h3 style="margin:0 0 6px;color:#d32f2f">Missing Keywords</h3>
+          <ul class="list" id="missingList"></ul>
+        </div>
+        <div class="card" style="background:#fff8e1">
+          <h3 style="margin:0 0 6px;color:#f57c00">Suggestions</h3>
+          <ul class="list" id="suggestionsList"></ul>
+        </div>
+      </div>
+
+      <div class="card" style="background:#e8f5e9">
+        <h3 style="margin:0 0 6px;color:#388e3c">Your Strengths</h3>
+        <ul class="list" id="strengthsList"></ul>
+      </div>
+
+      <button id="completeBtn" class="btn">Complete Analysis</button>
+      <div id="personalityCard" class="card hidden">
+        Personality predicted based on your CV: <span style="color:#1976d2">Innovative, Analytical, and Goal-Oriented</span>
+      </div>
+
+      <!-- 🔹 New Button -->
+      <button id="newCvBtn" class="btn hidden" style="background:#4caf50;margin-top:15px">Analyze Another CV</button>
+
+      <div class="footer">This analysis is based on common ATS requirements. Results are for informational purposes only.</div>
+    </div>
+  </div>
+
+  <script>
+    const API = "http://127.0.0.1:8000/analyze";
+    const fileEl = document.getElementById("cvFile");
+    const btn = document.getElementById("analyzeBtn");
+    const card = document.getElementById("resultCard");
+    const scoreText = document.getElementById("scoreText");
+    const scoreBar = document.getElementById("scoreBar");
+    const missingList = document.getElementById("missingList");
+    const suggestionsList = document.getElementById("suggestionsList");
+    const strengthsList = document.getElementById("strengthsList");
+    const fileInfo = document.getElementById("fileInfo");
+    const completeBtn = document.getElementById("completeBtn");
+    const personalityCard = document.getElementById("personalityCard");
+    const newCvBtn = document.getElementById("newCvBtn");
+
+    btn.addEventListener("click", async () => {
+      if (!fileEl.files.length) { alert("Please choose a CV file first."); return; }
+      btn.disabled = true; btn.textContent = "Analyzing...";
+      try {
+        const form = new FormData();
+        form.append("file", fileEl.files[0]);
+        const res = await fetch(API, { method: "POST", body: form });
+        const data = await res.json();
+
+        fileInfo.textContent = fileEl.files[0].name + " (" + (fileEl.files[0].size/1024).toFixed(0) + " KB)";
+        scoreText.textContent = data.score + "%";
+        scoreBar.style.width = data.score + "%";
+
+        function fillList(el, items) {
+          el.innerHTML = items.map(x => `<li>${x}</li>`).join("");
+        }
+        fillList(missingList, data.missing_keywords);
+        fillList(suggestionsList, data.suggestions);
+        fillList(strengthsList, data.strengths);
+
+        card.classList.remove("hidden");
+        newCvBtn.classList.remove("hidden");
+        window.scrollTo({ top: card.offsetTop - 10, behavior: "smooth" });
+      } catch (e) {
+        alert("Failed to analyze. Make sure the backend is running on 127.0.0.1:8000.");
+        console.error(e);
+      } finally {
+        btn.disabled = false; btn.textContent = "Analyze CV";
+      }
+    });
+
+    completeBtn.addEventListener("click", () => {
+      personalityCard.classList.remove("hidden");
+      personalityCard.scrollIntoView({ behavior: "smooth" });
+    });
+
+    // 🔹 Reset page for new CV
+    newCvBtn.addEventListener("click", () => {
+      fileEl.value = "";
+      card.classList.add("hidden");
+      personalityCard.classList.add("hidden");
+      newCvBtn.classList.add("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>
