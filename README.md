@@ -1,10 +1,10 @@
 # HexSoftwares_CV-Personality-Prediction-System
-CV Personality Prediction System
+# CV Personality Prediction System
 
 A Machine Learning-powered web application that analyzes a candidate’s resume or CV to predict their ATS (Applicant Tracking System) score and personality traits.
 The system extracts key information such as skills, keywords, and achievements to provide data-driven insights for recruiters and job seekers.
 
-🚀 Features
+# 🚀 Features
 
 ✅ Upload CV in PDF, DOC, or DOCX format
 
@@ -20,18 +20,18 @@ The system extracts key information such as skills, keywords, and achievements t
 
 ✅ FastAPI Backend for ML-powered predictions
 
-🛠️ Tech Stack
-Component	Technology Used
+# 🛠️ Tech Stack
+Component	               Technology Used
 
-Frontend	HTML, CSS, JavaScript
+Frontend	               HTML, CSS, JavaScript
 
-Backend	FastAPI (Python)
+Backend	                 FastAPI (Python)
 
-Machine Learning	Scikit-learn / NLP Models
+Machine Learning	       Scikit-learn / NLP Models
 
-Hosting	Localhost / Deployable
+Hosting                  Localhost / Deployable
 
-🔧 Installation & Setup
+# 🔧 Installation & Setup
 
 1️⃣ Clone the repository:
 
@@ -51,18 +51,23 @@ uvicorn main:app --reload
 
 4️⃣ Open index.html in your browser.
 
-💡 How It Works
+# 💡 How It Works
 
-Upload your CV.
+1.Upload your CV.
 
-The backend extracts keywords and analyzes content.
+2.The backend extracts keywords and analyzes content.
 
-The ATS Score, suggestions, and strengths are displayed.
+3.The ATS Score, suggestions, and strengths are displayed.
 
-Personality traits are predicted based on your CV data.
+4.Personality traits are predicted based on your CV data.
 
 📌 Use Cases
 
 🔹 Helps recruiters shortlist candidates efficiently
+
 🔹 Assists job seekers in optimizing their resumes
+
 🔹 Improves hiring decisions using AI insights
+
+# Demo Vedio
+check it out here:https://drive.google.com/file/d/1v6yy37G_uQRU8gzWHBHtyaNfeH5KS0zE/view?usp=drivesdk
